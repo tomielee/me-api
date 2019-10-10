@@ -1,6 +1,6 @@
 {
   "name": "me-api",
-  "version": "2.0.1",
+  "version": "1.0.1",
   "description": "express me-api for jsramverk",
   "main": "index.js",
   "scripts": {
