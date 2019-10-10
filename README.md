@@ -66,7 +66,9 @@ For a api named Title
     "morgan": "^1.9.1",
     "sqlite3": "^4.1.0"
   }
-} `
+} 
+`
+
 
 ### Database
 In your 
@@ -92,3 +94,7 @@ sudo apt install build-essential
 
 nodejs -v //should be over 10.
 npm -v //should be over 6
+
+### GIT repo
+Clone your git repo in a folder git/
+    ` git clone <repo>`
