@@ -28,11 +28,18 @@ router.get("/", (req, res) => {
 
 //index of REPORTS // ADD REPORT ONLY VALID WITH TOKEN
 router.post("/",
-    // withAuth,
+    withAuth,
     (req, res) => reports.addReport(res, req.body)
 );
 
+// router.get('/edit', function (req, res, next) {
+//     console.log("router '/reports/edit' works");
+// });
 
+router.put("/edit", 
+    withAuth,
+    (req, res) => reports.editReport(res, req.body)
+);
 
 //GET REPORT
 router.get("/week/:id", (req, res) =>

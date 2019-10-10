@@ -40,6 +40,38 @@ const reports = {
         );
     },
 
+    editReport: function (res, body) {
+        const id = body.id;
+        const title = body.title;
+        const text = body.text;
+
+        let newReport = [title, text, id];
+        console.log(newReport);
+
+        let query = "UPDATE reports SET title='" + title + "', text='" + text + "' WHERE id=" + id + ";";
+        console.log(query);
+        db.run(query,
+            (err, result) => {
+                if (err) {
+                    return res.status(500).json({
+                        errors: {
+                            source: "/reports/edit",
+                            title: "Database error",
+                            detail: err.message
+                        }
+                    });
+                }
+
+                return res.status(201).json({
+                    data: {
+                        msg: "Report sucessfully updated!"
+                    }
+                });
+
+            }
+        );
+    },
+
     getAllReports: function (res) {
         const sql = "SELECT * FROM reports;";
         
