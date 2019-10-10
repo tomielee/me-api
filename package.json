@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeneljenel/jsramverk-me-api.git"
+    "url": "git+https://github.com/jeneljenel/me-api.git"
   },
   "keywords": [
     "me-api",
@@ -21,9 +21,9 @@
   "author": "jenel",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jeneljenel/jsramverk-me-api/issues"
+    "url": "https://github.com/jeneljenel/me-api/issues"
   },
-  "homepage": "https://github.com/jeneljenel/jsramverk-me-api#readme",
+  "homepage": "https://github.com/jeneljenel/me-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
