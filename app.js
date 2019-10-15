@@ -17,7 +17,7 @@ const port = 1337; //use on local
 //const port = 8333; //CHANGE ON SERVER
 
 //Set up CROSS ORIGN SETUP
-var whitelist = ['http://localhost:' + port]
+var whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/reports']
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
