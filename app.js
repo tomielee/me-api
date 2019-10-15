@@ -13,10 +13,21 @@ const bodyParser = require("body-parser"); //Handle spaces and ÅÄÖ
 const cookieParser = require('cookie-parser'); //Protect routes
 
 const app = express();
-//const port = 1337; //use on local
-const port = 8333; //CHANGE ON SERVER
+const port = 1337; //use on local
+//const port = 8333; //CHANGE ON SERVER
 
-app.use(cors());
+//Set up CROSS ORIGN SETUP
+var whitelist = ['http://localhost:' + port]
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 app.use(bodyParser.json()); // for parsing application/json
