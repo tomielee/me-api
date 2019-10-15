@@ -97,9 +97,9 @@ const reports = {
 
     },
 
-    getReport: function (res, param) {
+    getReport: function (res, params) {
         const sql = "SELECT * FROM reports WHERE id IS(?);";
-        const id = param.id;
+        const id = params.id;
 
         db.each(
             sql,
@@ -119,7 +119,8 @@ const reports = {
 
                 return res.json({
                     title: report.title,
-                    text: report.text
+                    text: report.text,
+                    id: report.id
                 });
             }
         );

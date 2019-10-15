@@ -16,6 +16,13 @@ const app = express();
 const port = 1337;
 //const port = 8333; //CHANGE ON SERVER
 
+app.use(cors());
+app.use(cookieParser());
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+
 //Req routes
 const index = require('./routes/index');
 const hello = require('./routes/hello');
@@ -23,12 +30,6 @@ const reports = require('./routes/reports');
 
 const register = require('./routes/register');
 const login = require('./routes/login');
-
-app.use(cors());
-app.use(cookieParser());
-
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 
 // don't show the log when it is test

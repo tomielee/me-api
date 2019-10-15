@@ -4,8 +4,7 @@
 # misc
 .DS_Store
 .env
-/.old-dont-use/
-
+log.md
 
 # sql
 *.sqlite

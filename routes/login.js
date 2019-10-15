@@ -13,6 +13,10 @@ router.use(function (req, res, next) {
     next();
 });
 
+router.get("/", (req, res) => {
+    auth.getUsers(res, req.body)
+});
+
 //index of LOGIN
 router.post('/', 
     (req, res) => {

@@ -21,27 +21,25 @@ router.use(function (req, res, next) {
     next();
 });
 
-//RENDER ALL REPORTS
+//Index of Reports
+// Get ALL
 router.get("/", (req, res) => {
     reports.getAllReports(res)
 });
 
-//index of REPORTS // ADD REPORT ONLY VALID WITH TOKEN
+// Add report
 router.post("/",
     withAuth,
     (req, res) => reports.addReport(res, req.body)
 );
 
-// router.get('/edit', function (req, res, next) {
-//     console.log("router '/reports/edit' works");
-// });
-
+//Edit report
 router.put("/edit", 
     withAuth,
     (req, res) => reports.editReport(res, req.body)
 );
 
-//GET REPORT
+//Get A report
 router.get("/week/:id", (req, res) =>
     reports.getReport(res, req.params)
 );

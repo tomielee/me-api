@@ -82,19 +82,3 @@ Run ` .tables ` to check if tables are created
 
 ## On your server
 
-### SETUP your server
-sudo apt update
-sudo apt install curl
-cd ~
-curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
-sudo bash nodesource_setup.sh
-sudo apt install nodejs
-
-sudo apt install build-essential
-
-nodejs -v //should be over 10.
-npm -v //should be over 6
-
-### GIT repo
-Clone your git repo in a folder git/
-    ` git clone <repo>`

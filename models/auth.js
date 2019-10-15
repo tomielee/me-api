@@ -19,27 +19,32 @@ require('dotenv').config();
 
 const auth = {
     registerUser: function (res, body) {
-        const aName = body.aName;
-        const aEmail = body.aEmail;
-        const bName = body.bName;
-        const bEmail = body.bEmail;
+        // const aName = body.aName;
+        // const aEmail = body.aEmail;
+        // const bName = body.bName;
+        // const bEmail = body.bEmail;
+        const name = body.name;
+        const email = body.email;
         const birthday = body.birthday;
         const password = body.password;
 
-        let sql = "INSERT INTO users (aName, aEmail, bName, bEmail, birthday, password) VALUES(?, ?, ?, ?, ?, ?);"
+        // let sql = "INSERT INTO users (aName, aEmail, bName, bEmail, birthday, password) VALUES(?, ?, ?, ?, ?, ?);"
+        let sql = "INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);"
 
-        if (!aEmail || !bEmail || !password) {
+        if (!name || !email || !birthday || !password) {
             return res.status(401).json({
                 errors: {
                     status: 401,
                     source: "/register",
-                    title: "Email or password missing",
-                    detail: "Email or password missing in request",
+                    title: "Value (name, email, birtday or password) missing",
+                    detail: "Value (name, email, birtday or password) missing in request",
                 }
             });
         }
 
-        let params = [aName, aEmail, bName, bEmail, birthday];
+        // let params = [aName, aEmail, bName, bEmail, birthday];
+        let params = [name, email, birthday];
+
         console.log(params);
 
         bcrypt.hash(password, saltRounds, function(err, hash){
@@ -83,7 +88,7 @@ const auth = {
         const userEmail = body.email;
         const userPassword = body.password;
 
-        let sql = "SELECT * FROM 'users' WHERE aEmail IS (?);";
+        let sql = "SELECT * FROM 'users' WHERE email IS (?);";
         
         if (!userEmail || !userPassword) {
             return res.status(401).json({
@@ -169,7 +174,31 @@ const auth = {
             }
         )
 
-    }
+    },
+
+    getUsers: function (res, body) {
+        let sql = "SELECT * FROM 'users'";
+        
+        db.all(
+            sql,
+            (err, result) => {
+                if (err) {
+                    return res.status(500).json({
+                        errors: {
+                            source: "/login",
+                            title: "Database error",
+                            detail: err.message
+                        }
+                    });
+                }
+
+                let users = result;
+
+                return res.json(users);
+            }
+        );
+    },
+
 }
 
 
