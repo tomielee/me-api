@@ -17,9 +17,11 @@ const port = 1337; //use on local
 //const port = 8333; //CHANGE ON SERVER
 
 //Set up CROSS ORIGN SETUP
-var whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/reports']
-var corsOptions = {
-    origin: function (origin, callback) {
+const whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/register', 'http://localhost:' + port + '/login', 'http://localhost:' + port + '/reports'];
+
+console.log(whitelist);
+const corsOptions = {
+    'Access-Control-Allow-Origin': function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
@@ -36,11 +38,10 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 //Req routes
 const index = require('./routes/index');
-const hello = require('./routes/hello');
-const reports = require('./routes/reports');
-
 const register = require('./routes/register');
 const login = require('./routes/login');
+const reports = require('./routes/reports');
+
 
 
 // don't show the log when it is test
@@ -51,7 +52,6 @@ if (process.env.NODE_ENV !== 'test') {
 
 // ROUTES  
 app.use('/', index);
-app.use('/hello', hello);
 app.use('/register', register);
 app.use('/login', login);
 app.use('/reports', reports);
