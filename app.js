@@ -16,20 +16,20 @@ const app = express();
 const port = 1337; //use on local
 //const port = 8333; //CHANGE ON SERVER
 
-//Set up CROSS ORIGN SETUP
-const whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/register', 'http://localhost:' + port + '/login', 'http://localhost:' + port + '/reports'];
+// //Set up CROSS ORIGN SETUP
+// const whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/register', 'http://localhost:' + port + '/login', 'http://localhost:' + port + '/reports'];
 
-console.log(whitelist);
-const corsOptions = {
-    'Access-Control-Allow-Origin': function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
-app.use(cors(corsOptions));
+// console.log(whitelist);
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     }
+// }
+app.use(cors());
 app.use(cookieParser());
 
 app.use(bodyParser.json()); // for parsing application/json
