@@ -13,8 +13,8 @@ const bodyParser = require("body-parser"); //Handle spaces and ÅÄÖ
 const cookieParser = require('cookie-parser'); //Protect routes
 
 const app = express();
-const port = 1337;
-//const port = 8333; //CHANGE ON SERVER
+//const port = 1337; //use on local
+const port = 8333; //CHANGE ON SERVER
 
 app.use(cors());
 app.use(cookieParser());
