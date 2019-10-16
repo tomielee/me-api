@@ -148,7 +148,7 @@ const auth = {
                             };
                             let secret = process.env.JWT_SECRET;
                             let token = jwt.sign(payload, secret, { expiresIn: '1h' });
-                            res.cookie('token', token, { httpOnly: true })
+                            // res.cookie('token', token, { httpOnly: true })
                             return res.status(200).json({
                                 data: {
                                     type: "success",
