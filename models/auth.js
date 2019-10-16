@@ -187,6 +187,7 @@ const auth = {
                 }
 
                 let users = result;
+                console.log(users);
 
                 return res.json(users);
             }
