@@ -122,6 +122,7 @@ const auth = {
                 }
 
                 const user = userfound;
+
                 bcrypt.compare(
                     userPassword, user.password, 
                     (err, result) => {
@@ -140,8 +141,6 @@ const auth = {
 
                         if (result) {
                             console.log(userEmail);
-                            console.log(user.name);
-                            console.log(user.email);
                             let payload = { 
                                 name: user.name,
                                 email: user.email

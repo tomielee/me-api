@@ -14,21 +14,8 @@ const cookieParser = require('cookie-parser'); //Protect routes
 
 const app = express();
 //const port = 1337; //use on local
-const port = 8333; //CHANGE ON SERVER
+const port = 8333; //use on server
 
-// //Set up CROSS ORIGN SETUP
-// const whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/register', 'http://localhost:' + port + '/login', 'http://localhost:' + port + '/reports'];
-
-// console.log(whitelist);
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         if (whitelist.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error('Not allowed by CORS'))
-//         }
-//     }
-// }
 
 app.all('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "https://me-api.jeneljenel/*");
