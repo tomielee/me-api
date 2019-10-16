@@ -140,7 +140,12 @@ const auth = {
 
                         if (result) {
                             console.log(userEmail);
-                            let payload = {email: userEmail};
+                            console.log(user.name);
+                            console.log(user.email);
+                            let payload = { 
+                                name: user.name,
+                                email: user.email
+                            };
                             let secret = process.env.JWT_SECRET;
                             let token = jwt.sign(payload, secret, { expiresIn: '1h' });
                             res.cookie('token', token, { httpOnly: true })
