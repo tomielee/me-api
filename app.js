@@ -13,8 +13,8 @@ const bodyParser = require("body-parser"); //Handle spaces and ÅÄÖ
 const cookieParser = require('cookie-parser'); //Protect routes
 
 const app = express();
-const port = 1337; //use on local
-//const port = 8333; //CHANGE ON SERVER
+//const port = 1337; //use on local
+const port = 8333; //CHANGE ON SERVER
 
 // //Set up CROSS ORIGN SETUP
 // const whitelist = ['http://localhost:' + port, 'http://localhost:' + port + '/register', 'http://localhost:' + port + '/login', 'http://localhost:' + port + '/reports'];
@@ -38,8 +38,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 //Req routes
 const index = require('./routes/index');
-const register = require('./routes/register');
 const login = require('./routes/login');
+
+const register = require('./routes/register');
 const reports = require('./routes/reports');
 
 
@@ -52,8 +53,8 @@ if (process.env.NODE_ENV !== 'test') {
 
 // ROUTES  
 app.use('/', index);
-app.use('/register', register);
 app.use('/login', login);
+app.use('/register', register);
 app.use('/reports', reports);
 
 

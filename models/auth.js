@@ -19,16 +19,11 @@ require('dotenv').config();
 
 const auth = {
     registerUser: function (res, body) {
-        // const aName = body.aName;
-        // const aEmail = body.aEmail;
-        // const bName = body.bName;
-        // const bEmail = body.bEmail;
         const name = body.name;
         const email = body.email;
         const birthday = body.birthday;
         const password = body.password;
 
-        // let sql = "INSERT INTO users (aName, aEmail, bName, bEmail, birthday, password) VALUES(?, ?, ?, ?, ?, ?);"
         let sql = "INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);"
 
         if (!name || !email || !birthday || !password) {
@@ -42,7 +37,6 @@ const auth = {
             });
         }
 
-        // let params = [aName, aEmail, bName, bEmail, birthday];
         let params = [name, email, birthday];
 
         console.log(params);
