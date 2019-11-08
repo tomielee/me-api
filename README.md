@@ -38,6 +38,24 @@ To read .env, use doentv
 The database is based in sqlite.
     ` npm install sqlite3 --save `
 
+To run tests with mocha - test the api
+    `npm install mocha --save-dev`
+
+To get code coverage use Istanbul
+    `npm install nyc --save-dev`
+
+To test integration - test the api with routes
+    `npm install chai chai-http --save-dev`
+
+To validate code
+    `npm install javascript-style-guide --save-dev`
+also run `cp node_modules/javascript-style-guide/.eslint* . `
+    `npm install eslint eslint-plugin-react --save-dev`
+    
+
+
+
+
 #### To keep npm running
 In development mode
     `npm install -g nodemon `
