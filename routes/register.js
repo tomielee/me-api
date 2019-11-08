@@ -11,10 +11,10 @@ const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 // middleware that is specific to this router
-router.use(function (req, res, next) {
-    console.log("router '/register' works");
-    next();
-});
+// router.use(function (req, res, next) {
+//     console.log("router '/register' works");
+//     next();
+// });
 
 
 //register form 

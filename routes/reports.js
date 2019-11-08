@@ -16,10 +16,10 @@ const withAuth = require('../middleware.js');
 
 
 // middleware that is specific to this router
-router.use(function (req, res, next) {
-    console.log("router '/reports' works");
-    next();
-});
+// router.use(function (req, res, next) {
+//     console.log("router '/reports' works");
+//     next();
+// });
 
 //Index of Reports
 // Get ALL
