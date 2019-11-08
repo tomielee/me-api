@@ -6,8 +6,10 @@
 
 
 //Database
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/texts.sqlite');
+// const sqlite3 = require('sqlite3').verbose();
+// const db = new sqlite3.Database('./db/texts.sqlite');
+const db = require("../db/database.js");
+
 
 // Handle hashing password
 const bcrypt = require('bcryptjs');
@@ -39,7 +41,7 @@ const auth = {
 
         let params = [name, email, birthday];
 
-        console.log(params);
+        // console.log(params);
 
         bcrypt.hash(password, saltRounds, function(err, hash){
             if (err) {
@@ -140,7 +142,7 @@ const auth = {
 
 
                         if (result) {
-                            console.log(userEmail);
+                            // console.log(userEmail);
                             let payload = { 
                                 name: user.name,
                                 email: user.email
@@ -191,7 +193,7 @@ const auth = {
                 }
 
                 let users = result;
-                console.log(users);
+                // console.log(users);
 
                 return res.json(users);
             }

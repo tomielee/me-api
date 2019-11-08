@@ -6,8 +6,10 @@
 
 
 //Database
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/texts.sqlite');
+// const sqlite3 = require('sqlite3').verbose();
+// const db = new sqlite3.Database('./db/texts.sqlite');
+const db = require("../db/database.js");
+
 
 
 const reports = {
@@ -46,10 +48,10 @@ const reports = {
         const text = body.text;
 
         let newReport = [title, text, id];
-        console.log(newReport);
+        // console.log(newReport);
 
         let query = "UPDATE reports SET title='" + title + "', text='" + text + "' WHERE id=" + id + ";";
-        console.log(query);
+            // console.log(query);
         db.run(query,
             (err, result) => {
                 if (err) {
