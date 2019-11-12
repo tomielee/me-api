@@ -22,19 +22,6 @@ describe('Register', () => {
     */
    
     /*
-    * Test the /GET route
-    */
-        describe('GET /register', () => {
-            it('200 HAPPY PATH', (done) => {
-                chai.request(server)
-                    .get("/")
-                    .end((err, res) => {
-                        res.should.have.status(200);
-                        done();
-                    });
-            });
-        });
-    /*
     * Test the POST route without password
     */
     describe('POST /register', () => {
