@@ -41,12 +41,13 @@ describe('Login', () => {
                 email: "donald.duck@testlogin.com",
                 birthday: "9 June 1934",
                 password: "Passw0rd!"
-            }
+            };
 
             chai.request(server)
                 .post('/register')
                 .send(body)
                 .end((err, res) => {
+                    console.log(res.body);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     done();
