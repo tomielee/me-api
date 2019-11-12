@@ -10,6 +10,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const server = require('../../app.js');
+const db = require("../../db/database.js");
 
 chai.should(); //use strict
 
@@ -18,9 +19,33 @@ chai.use(chaiHttp);
 
 describe('Register', () => {
     /*
-    * Reset the database before running the data
+    * Create tables users.
     */
-   
+    before((done) => {
+        let sql_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+        db.run(sql_users);
+        done();
+    });
+
+    /*
+    * Delete tables users.
+    */
+    afterEach((done) => {
+        const sql_users = "DELETE FROM users;";
+        db.run(sql_users);
+        done();
+    });
+
+    /*
+    * Drop tables users.
+    */
+    after((done) => {
+        const sql_users = "DROP TABLE IF EXISTS users;";
+        db.run(sql_users);
+        done();
+    });
+
+
     /*
     * Test the POST route without password
     */

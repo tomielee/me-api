@@ -21,6 +21,43 @@ chai.use(chaiHttp);
 let token = "";
 
 describe('Reports', () => {
+    /*
+    * Create tables users and reports.
+    */
+    before((done) => {
+        let sql_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+        db.run(sql_users);
+
+        let sql_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
+        db.run(sql_reports);
+        done();
+    });
+
+    /*
+    * Delete tables users and reports.
+    */
+    afterEach((done) => {
+        const sql_users = "DELETE FROM users;";
+        db.run(sql_users);
+
+        const sql_reports = "DELETE FROM reports;";
+        db.run(sql_reports);
+        done();
+    });
+    
+    /*
+    * Drop tables users and reports.
+    */
+    after((done) => {
+        const sql_users = "DROP TABLE IF EXISTS users;";
+        db.run(sql_users);
+
+        const sql_reports = "DROP TABLE IF EXISTS reports;";
+        db.run(sql_reports);
+        done();
+    });
+
+
 
     /*
     * Test the /GET route
