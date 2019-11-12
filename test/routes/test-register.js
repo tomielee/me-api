@@ -26,9 +26,6 @@ describe('Register', () => {
     */
     describe('POST /register', () => {
 
-        /*
-        * Test the /GET route
-        */
         it('should get 401 - invalid password', (done) => {
             const body = {
                 name: "Donald Duck",
@@ -66,10 +63,6 @@ describe('Register', () => {
                 });
         });
 
-    });
-
-
-
-    
+    }); 
 
 });

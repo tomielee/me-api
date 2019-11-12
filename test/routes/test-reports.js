@@ -36,9 +36,9 @@ describe('Reports', () => {
         });
     });
 
-    // /*
-    // * Test the /POST route - with error
-    // */
+    /*
+    * Test the /POST route - with error
+    */
     describe('POST /reports', () => {
         it('Should get 401  - no token provided', (done) => {
             chai.request(server)
@@ -105,9 +105,9 @@ describe('Reports', () => {
     });
 
 
-        /*
-        * Test /PUT
-        */
+    /*
+    * Test /PUT - edit reports
+    */
     describe('PUT /report/edit', () => {
         it('should get 201 - edit report', (done) => {
             let report = {
@@ -129,9 +129,9 @@ describe('Reports', () => {
         )
     });
 
-    // /*
-    // * Test the /GET
-    // */
+    /*
+    * Test the /GET - fetch a report
+    */
     describe('GET /week/:id', () => {
         it('Should return 200', (done) => {
             let id = 1
