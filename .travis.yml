@@ -14,7 +14,7 @@ before_script:
     - chmod +x db/reset_test_db.bash
     - npm install
 env:
-    JWT_SECRET='thisIsNoSecret'
+    JWT_SECRET='thisIsNoSecretButItisL00ngEnough'
 
 script:
     - npm test
