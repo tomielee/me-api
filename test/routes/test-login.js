@@ -25,6 +25,8 @@ describe('Login', () => {
             chai.request(server)
                 .get("/login")
                 .end((err, res) => {
+                    console.log(res.body);
+                    console.log(err);
                     res.should.have.status(200);
                     done();
                 });
@@ -48,6 +50,7 @@ describe('Login', () => {
                 .send(body)
                 .end((err, res) => {
                     console.log(res.body);
+                    console.log(err);
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     done();
