@@ -13,7 +13,7 @@ git:
 
 before_script:
     - export JWT_SECRET='thisIsNoSecret'
-    - chmod +x db/reset_db_test.bash
+    - chmod +x db/reset_test_db.bash
     - npm install
 
 script:
