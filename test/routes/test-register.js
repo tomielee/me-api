@@ -20,10 +20,28 @@ describe('Register', () => {
     /*
     * Reset the database before running the data
     */
+   
     /*
-    * Test the /POST route without password
+    * Test the /GET route
     */
-    describe('/POST register', () => {
+        describe('GET /register', () => {
+            it('200 HAPPY PATH', (done) => {
+                chai.request(server)
+                    .get("/")
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        done();
+                    });
+            });
+        });
+    /*
+    * Test the POST route without password
+    */
+    describe('POST /register', () => {
+
+        /*
+        * Test the /GET route
+        */
         it('should get 401 - invalid password', (done) => {
             const body = {
                 name: "Donald Duck",
