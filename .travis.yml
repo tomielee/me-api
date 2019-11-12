@@ -4,7 +4,6 @@ node_js:
     - "node"
     - "10"
     - "8"
-    - "6"
 
 sudo: false
 
@@ -12,9 +11,10 @@ git:
     submodules: false
 
 before_script:
-    - export JWT_SECRET='thisIsNoSecret'
     - chmod +x db/reset_test_db.bash
     - npm install
+env:
+    JWT_SECRET='thisIsNoSecret'
 
 script:
     - npm test
