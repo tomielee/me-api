@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/jeneljenel/me-api.svg?branch=master)](https://travis-ci.org/jeneljenel/me-api)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jeneljenel/me-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jeneljenel/me-api/?branch=master)
 
 A API with Express
 
