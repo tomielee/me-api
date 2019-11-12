@@ -97,6 +97,3 @@ $ sqlite3 texts.sqlite
     .exit
 `
 Run ` .tables ` to check if tables are created
-
-## On your server
-
