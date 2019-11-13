@@ -21,10 +21,16 @@ describe('Register', () => {
     /*
     * Create tables users.
     */
-    before((done) => {
-        let sql_create = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-        db.run(sql_create);
-        done();
+    before(() => {
+        return new Promise((resolve) => {
+            let sql_create = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+            db.run(sql_create, (err) => {
+                if (err) {
+                    console.log("Could not create table users.");
+                }
+                resolve();
+            });
+        });
     });
 
     /*

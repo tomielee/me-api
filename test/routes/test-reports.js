@@ -27,16 +27,32 @@ describe('Reports', () => {
     * Create tables users and reports.
     */
     before(async function () {
-        try {
-            let sql_create_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-            await db.run(sql_create_users);
+        let sql_create_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+        let sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
 
-            let sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
-            await db.run(sql_create_reports);
+        return new Promise((resolve) => {
+            db.run(sql_create_users, (err) => {
+                if (err) {
+                    console.error("Could not create table users.", err.message);
+                };
+                db.run(sql_create_reports, (err) => {
+                    if (err) {
+                        console.error("Could not create table reports", err.message);
+                    }
+                    resolve();
+                });
+            });
+        });
 
-        } catch (ex) {
-            console.error(ex)
-        }
+        // try {
+        //     let sql_create_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+        //     await db.run(sql_create_users);
+        //     let sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
+        //     await db.run(sql_create_reports);
+
+        // } catch (ex) {
+        //     console.error("något fel i reports", ex)
+        // }
 
     });
 
