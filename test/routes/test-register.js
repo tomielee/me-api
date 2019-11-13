@@ -51,7 +51,7 @@ describe('Register', () => {
     */
     describe('POST /register', () => {
 
-        it('should get 401 - invalid password', (done) => {
+        it('should get 401 - invalid no password', (done) => {
             const body = {
                 name: "Donald Duck",
                 email: "donald.duck@example.com",
