@@ -26,7 +26,7 @@ describe('Reports', () => {
     /*
     * Create tables users and reports.
     */
-    before(async function () {
+    before(() => {
         let sql_create_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
         let sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
 
@@ -44,33 +44,44 @@ describe('Reports', () => {
             });
         });
 
-        // try {
-        //     let sql_create_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-        //     await db.run(sql_create_users);
-        //     let sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
-        //     await db.run(sql_create_reports);
-
-        // } catch (ex) {
-        //     console.error("något fel i reports", ex)
-        // }
-
     });
 
     /*
     * Insert test content in users.
     */
-    beforeEach(async function () {
-        try {
-            const hash = await bcrypt.hash("Passw0rd!", saltRounds);
-            const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
-            const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
+    beforeEach(() => {
+        return new Promise((resolve) => {
+            bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => {
+                if (err) {
+                    console.error("Could not create hash.");
+                }
+                const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
+                
+                db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user), (err) => {
+                    if (err) {
+                        console.error("Could not insert content in users.");
+                    }
 
-            await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
-            await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
+                    const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
+                    db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report), (err) => {
+                        if (err) {
+                            console.error("Could not insert content in reports.");
+                        }
+                        resolve();
+                    };
+                };
 
-        } catch (ex) {
-            console.error(ex);
-        }
+            });
+        })
+        // try {
+        //     const hash = await bcrypt.hash("Passw0rd!", saltRounds);
+
+        //     await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
+        //     await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
+
+        // } catch (ex) {
+        //     console.error(ex);
+        // }
     
     });
 
@@ -189,33 +200,20 @@ describe('Reports', () => {
         )
     });
 
-    // /*
-    // * Test the /GET - fetch a report
-    // */
-    // describe('GET /week/:id', () => {
-    //     it('Should return 200', (done) => {
-    //         let id = 3;
+    /*
+    * Test the /GET - fetch a report
+    */
+    describe('GET /week/:id', () => {
+        it('Should return 200', (done) => {
+            let id = 3;
 
-    //         chai.request(server)
-    //             .get("/reports/week/" + id)
-    //             .end((err, res) => {
-    //                 if (err) { console.log(err)}
-    //                 res.should.have.status(200);
-    //                 done()
-    //             });
-    //     })
-    // });
-
-    // after(() => {
-    //     return new Promise((resolve) => {
-    //         db.run("DELETE FROM users;", (err) => {
-    //             if (err) {
-    //                 console.error("Could not delete all from users.", err.message);
-    //             }
-
-    //             resolve();
-    //         });
-    //     });
-    // });
-
+            chai.request(server)
+                .get("/reports/week/" + id)
+                .end((err, res) => {
+                    if (err) { console.log(err)}
+                    res.should.have.status(200);
+                    done()
+                });
+        })
+    });
 });
