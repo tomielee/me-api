@@ -11,6 +11,7 @@ const chaiHttp = require('chai-http');
 
 const server = require('../../app.js');
 const db = require("../../db/database.js");
+const auth = require("../../models/auth.js");
 
 // Handle hashing password
 const bcrypt = require('bcryptjs');
@@ -32,25 +33,20 @@ describe('Login', () => {
     * Insert test content in users.
     */
     beforeEach(async function () {
-        // await bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => {
-        //     if (err) {
-        //         console.log(err)
-        //     }
-        //     const body = {
-        //         name: "Donald Duck",
-        //         email: "donald.duck@testlogin.com",
-        //         birthday: "9 June 1934",
-        //         password: hash
-        //     };
-
+        try {
+            const hash = await bcrypt.hash("Passw0rd!", saltRounds);
             const body = {
                 name: "Donald Duck",
                 email: "donald.duck@testlogin.com",
                 birthday: "9 June 1934",
-                password: "Passw0rd!"
+                password: hash
             };
-            db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body, () =>{ console.log("donald is in the table.")});
-        // });
+            console.log(hash);
+
+            await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body);
+        } catch (ex) {
+            console.error(ex);
+        }
     })
 
     /*
@@ -79,7 +75,7 @@ describe('Login', () => {
                 .get("/login")
                 .end((err, res) => {
                     res.should.have.status(200);
-                    done();
+                    done(); //RAD 78
                 });
         });
     });
