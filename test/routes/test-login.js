@@ -41,7 +41,6 @@ describe('Login', () => {
                 "9 June 1934",
                 hash
             ];
-            console.log(hash);
 
             await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body);
         } catch (ex) {
@@ -75,7 +74,7 @@ describe('Login', () => {
                 .get("/login")
                 .end((err, res) => {
                     res.should.have.status(200);
-                    done(); //RAD 78
+                    done();
                 });
         });
     });
@@ -128,9 +127,6 @@ describe('Login', () => {
                 .post('/login')
                 .send(body)
                 .end((err, res) => {
-                    if (err) {
-                        console.log(err);
-                    }
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     done();
