@@ -49,39 +49,41 @@ describe('Reports', () => {
     /*
     * Insert test content in users.
     */
-    beforeEach(() => {
-        return new Promise((resolve) => {
-            bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => {
-                if (err) {
-                    console.error("Could not create hash.");
-                }
-                const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
+    beforeEach(async function () {
+        // return new Promise((resolve) => {
+        //     bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => {
+        //         if (err) {
+        //             console.error("Could not create hash.");
+        //         }
+        //         const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
                 
-                db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user), (err) => {
-                    if (err) {
-                        console.error("Could not insert content in users.");
-                    }
+        //         db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user), (err) => {
+        //             if (err) {
+        //                 console.error("Could not insert content in users.");
+        //             }
 
-                    const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
-                    db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report), (err) => {
-                        if (err) {
-                            console.error("Could not insert content in reports.");
-                        }
-                        resolve();
-                    };
-                };
+        //             const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
+        //             db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report), (err) => {
+        //                 if (err) {
+        //                     console.error("Could not insert content in reports.");
+        //                 }
+        //                 resolve();
+        //             };
+        //         };
 
-            });
-        })
-        // try {
-        //     const hash = await bcrypt.hash("Passw0rd!", saltRounds);
+        //     });
+        // })
+        try {
+            const hash = await bcrypt.hash("Passw0rd!", saltRounds);
+            const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
+            const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
 
-        //     await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
-        //     await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
+            await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
+            await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
 
-        // } catch (ex) {
-        //     console.error(ex);
-        // }
+        } catch (ex) {
+            console.error(ex);
+        }
     
     });
 
