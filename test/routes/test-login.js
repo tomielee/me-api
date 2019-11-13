@@ -25,8 +25,8 @@ describe('Login', () => {
     * Create tables users.
     */
     before(async function () {
-        let sql_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-        await db.run(sql_users);
+        let sql_create = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+        await db.run(sql_create);
     });
 
     /*
@@ -35,12 +35,12 @@ describe('Login', () => {
     beforeEach(async function () {
         try {
             const hash = await bcrypt.hash("Passw0rd!", saltRounds);
-            const body = {
-                name: "Donald Duck",
-                email: "donald.duck@testlogin.com",
-                birthday: "9 June 1934",
-                password: hash
-            };
+            const body = [
+                "Donald Duck",
+                "donald.duck@testlogin.com",
+                "9 June 1934",
+                hash
+            ];
             console.log(hash);
 
             await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body);
@@ -53,8 +53,8 @@ describe('Login', () => {
     * Delete all content from tables users.
     */
     afterEach(async function() {
-        const sql_users = "DELETE FROM users;";
-        await db.run(sql_users);
+        const sql_delete = "DELETE FROM users;";
+        await db.run(sql_delete);
 
     });
 
@@ -62,8 +62,8 @@ describe('Login', () => {
     * Drop tables users.
     */
     after(async function () {
-        const sql_users = "DROP TABLE IF EXISTS users;";
-        await db.run(sql_users);
+        const sql_drop = "DROP TABLE IF EXISTS users;";
+        await db.run(sql_drop);
     });
 
     /*
@@ -80,61 +80,61 @@ describe('Login', () => {
         });
     });
 
-    // /*
-    // * Test the /POST route
-    // */
-    // describe('POST /login', () => {
-    //     it('should get 401 - wrong password.', (done) => {
-    //         const body = {
-    //             userEmail: "donald.duck@testlogin.com",
-    //             userPassword: "InvalidPassw0rd!"
-    //         }
+    /*
+    * Test the /POST route
+    */
+    describe('POST /login', () => {
+        it('should get 401 - wrong password.', (done) => {
+            const body = {
+                userEmail: "donald.duck@testlogin.com",
+                userPassword: "InvalidPassw0rd!"
+            }
 
-    //         chai.request(server)
-    //             .post('/login')
-    //             .send(body)
-    //             .end((err, res) => {
-    //                 res.should.have.status(401);
-    //                 res.body.should.be.a('object');
-    //                 res.body.should.have.property('errors');
-    //                 done();
-    //             });
-    //     });
+            chai.request(server)
+                .post('/login')
+                .send(body)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('errors');
+                    done();
+                });
+        });
 
-    //     it('should get 401 - user not found.', (done) => {
-    //         const body = {
-    //             userEmail: "mickey.mouse@example.com",
-    //             userPassword: "Passw0rd!"
-    //         }
+        it('should get 401 - user not found.', (done) => {
+            const body = {
+                userEmail: "mickey.mouse@example.com",
+                userPassword: "Passw0rd!"
+            }
 
-    //         chai.request(server)
-    //             .post('/login')
-    //             .send(body)
-    //             .end((err, res) => {
-    //                 res.should.have.status(401);
-    //                 res.body.should.be.a('object');
-    //                 res.body.should.have.property('errors');
-    //                 done();
-    //             });
-    //     });
+            chai.request(server)
+                .post('/login')
+                .send(body)
+                .end((err, res) => {
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('errors');
+                    done();
+                });
+        });
 
-    //     it('should get 200 - login success.', (done) => {         
-    //         const body = {
-    //             email: "donald.duck@testlogin.com",
-    //             password: "Passw0rd!"
-    //         }
+        it('should get 200 - login success.', (done) => {         
+            const body = {
+                email: "donald.duck@testlogin.com",
+                password: "Passw0rd!"
+            }
 
-    //         chai.request(server)
-    //             .post('/login')
-    //             .send(body)
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     console.log(err);
-    //                 }
-    //                 res.should.have.status(200);
-    //                 res.body.should.be.a('object');
-    //                 done();
-    //             });
-    //     });
-    // });
+            chai.request(server)
+                .post('/login')
+                .send(body)
+                .end((err, res) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+    });
 });
