@@ -23,43 +23,51 @@ describe('Login', () => {
     /*
     * Create tables users.
     */
-    before((done) => {
+    before(async function () {
         let sql_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-        db.run(sql_users);
-        done();
+        await db.run(sql_users);
     });
 
     /*
     * Insert test content in users.
     */
     beforeEach(async function () {
-        const hashed = await bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => { return hash });
-        const body = {
-            name: "Donald Duck",
-            email: "donald.duck@testlogin.com",
-            birthday: "9 June 1934",
-            password: hashed
-        };
-        await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body);
+        // await bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => {
+        //     if (err) {
+        //         console.log(err)
+        //     }
+        //     const body = {
+        //         name: "Donald Duck",
+        //         email: "donald.duck@testlogin.com",
+        //         birthday: "9 June 1934",
+        //         password: hash
+        //     };
 
+            const body = {
+                name: "Donald Duck",
+                email: "donald.duck@testlogin.com",
+                birthday: "9 June 1934",
+                password: "Passw0rd!"
+            };
+            db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body, () =>{ console.log("donald is in the table.")});
+        // });
     })
 
     /*
-    * Delete tables users.
+    * Delete all content from tables users.
     */
-    afterEach((done) => {
+    afterEach(async function() {
         const sql_users = "DELETE FROM users;";
-        db.run(sql_users);
-        done();
+        await db.run(sql_users);
+
     });
 
     /*
     * Drop tables users.
     */
-    after((done) => {
+    after(async function () {
         const sql_users = "DROP TABLE IF EXISTS users;";
-        db.run(sql_users);
-        done();
+        await db.run(sql_users);
     });
 
     /*
@@ -70,7 +78,6 @@ describe('Login', () => {
             chai.request(server)
                 .get("/login")
                 .end((err, res) => {
-                    console.log(res.body);
                     res.should.have.status(200);
                     done();
                 });
@@ -81,24 +88,6 @@ describe('Login', () => {
     * Test the /POST route
     */
     describe('POST /login', () => {
-        // it('should get 201 - register a user', (done) => {
-        //     const body = {
-        //         name: "Donald Duck",
-        //         email: "donald.duck@testlogin.com",
-        //         birthday: "9 June 1934",
-        //         password: "Passw0rd!"
-        //     };
-
-        //     chai.request(server)
-        //         .post('/register')
-        //         .send(body)
-        //         .end((err, res) => {
-        //             res.should.have.status(201);
-        //             res.body.should.be.a('object');
-        //             done();
-        //         });
-        // });
-
         it('should get 401 - wrong password.', (done) => {
             const body = {
                 userEmail: "donald.duck@testlogin.com",
@@ -141,9 +130,11 @@ describe('Login', () => {
 
             chai.request(server)
                 .post('/login')
-                .send(user)
+                .send(body)
                 .end((err, res) => {
-                    console.log(err)
+                    if (err) {
+                        console.log(err);
+                    }
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     done();
