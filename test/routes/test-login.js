@@ -80,61 +80,61 @@ describe('Login', () => {
         });
     });
 
-    /*
-    * Test the /POST route
-    */
-    describe('POST /login', () => {
-        it('should get 401 - wrong password.', (done) => {
-            const body = {
-                userEmail: "donald.duck@testlogin.com",
-                userPassword: "InvalidPassw0rd!"
-            }
+    // /*
+    // * Test the /POST route
+    // */
+    // describe('POST /login', () => {
+    //     it('should get 401 - wrong password.', (done) => {
+    //         const body = {
+    //             userEmail: "donald.duck@testlogin.com",
+    //             userPassword: "InvalidPassw0rd!"
+    //         }
 
-            chai.request(server)
-                .post('/login')
-                .send(body)
-                .end((err, res) => {
-                    res.should.have.status(401);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('errors');
-                    done();
-                });
-        });
+    //         chai.request(server)
+    //             .post('/login')
+    //             .send(body)
+    //             .end((err, res) => {
+    //                 res.should.have.status(401);
+    //                 res.body.should.be.a('object');
+    //                 res.body.should.have.property('errors');
+    //                 done();
+    //             });
+    //     });
 
-        it('should get 401 - user not found.', (done) => {
-            const body = {
-                userEmail: "mickey.mouse@example.com",
-                userPassword: "Passw0rd!"
-            }
+    //     it('should get 401 - user not found.', (done) => {
+    //         const body = {
+    //             userEmail: "mickey.mouse@example.com",
+    //             userPassword: "Passw0rd!"
+    //         }
 
-            chai.request(server)
-                .post('/login')
-                .send(body)
-                .end((err, res) => {
-                    res.should.have.status(401);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('errors');
-                    done();
-                });
-        });
+    //         chai.request(server)
+    //             .post('/login')
+    //             .send(body)
+    //             .end((err, res) => {
+    //                 res.should.have.status(401);
+    //                 res.body.should.be.a('object');
+    //                 res.body.should.have.property('errors');
+    //                 done();
+    //             });
+    //     });
 
-        it('should get 200 - login success.', (done) => {         
-            const body = {
-                email: "donald.duck@testlogin.com",
-                password: "Passw0rd!"
-            }
+    //     it('should get 200 - login success.', (done) => {         
+    //         const body = {
+    //             email: "donald.duck@testlogin.com",
+    //             password: "Passw0rd!"
+    //         }
 
-            chai.request(server)
-                .post('/login')
-                .send(body)
-                .end((err, res) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    done();
-                });
-        });
-    });
+    //         chai.request(server)
+    //             .post('/login')
+    //             .send(body)
+    //             .end((err, res) => {
+    //                 if (err) {
+    //                     console.log(err);
+    //                 }
+    //                 res.should.have.status(200);
+    //                 res.body.should.be.a('object');
+    //                 done();
+    //             });
+    //     });
+    // });
 });
