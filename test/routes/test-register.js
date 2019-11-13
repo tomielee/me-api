@@ -22,8 +22,8 @@ describe('Register', () => {
     * Create tables users.
     */
     before((done) => {
-        let sql_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-        db.run(sql_users);
+        let sql_create = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+        db.run(sql_create);
         done();
     });
 
@@ -31,8 +31,8 @@ describe('Register', () => {
     * Delete tables users.
     */
     afterEach((done) => {
-        const sql_users = "DELETE FROM users;";
-        db.run(sql_users);
+        const sql_delete = "DELETE FROM users;";
+        db.run(sql_delete);
         done();
     });
 
@@ -40,8 +40,8 @@ describe('Register', () => {
     * Drop tables users.
     */
     after((done) => {
-        const sql_users = "DROP TABLE IF EXISTS users;";
-        db.run(sql_users);
+        const sql_drop = "DROP TABLE IF EXISTS users;";
+        db.run(sql_drop);
         done();
     });
 
