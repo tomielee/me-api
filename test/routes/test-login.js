@@ -11,7 +11,6 @@ const chaiHttp = require('chai-http');
 
 const server = require('../../app.js');
 const db = require("../../db/database.js");
-const auth = require("../../models/auth.js");
 
 // Handle hashing password
 const bcrypt = require('bcryptjs');
