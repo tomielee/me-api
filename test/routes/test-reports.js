@@ -10,10 +10,12 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const server = require('../../app.js');
-const auth = require('../../models/auth.js');
-const reports = require('../../models/reports.js');
 const db = require("../../db/database.js");
 
+
+// Handle hashing password
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 chai.should(); //use strict
 chai.use(chaiHttp);
@@ -32,6 +34,25 @@ describe('Reports', () => {
         db.run(sql_reports);
         done();
     });
+
+    /*
+    * Insert test content in users.
+    */
+    beforeEach(async function () {
+        try {
+            const hash = await bcrypt.hash("Passw0rd!", saltRounds);
+            const body = [
+                "Donald Duck",
+                "donald.duck@reports.com",
+                "9 June 1934",
+                hash
+            ];
+
+            await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", body);
+        } catch (ex) {
+            console.error(ex);
+        }
+    })
 
     /*
     * Delete tables users and reports.
@@ -86,23 +107,23 @@ describe('Reports', () => {
                 });
         });
 
-        it('Should get 201 - register a user', (done) => {
-            const body = {
-                name: "Donald Duck",
-                email: "donald.duck@reports.com",
-                birthday: "9 June 1934",
-                password: "Passw0rd!"
-            }
+        // it('Should get 201 - register a user', (done) => {
+        //     const body = {
+        //         name: "Donald Duck",
+        //         email: "donald.duck@reports.com",
+        //         birthday: "9 June 1934",
+        //         password: "Passw0rd!"
+        //     }
 
-            chai.request(server)
-                .post('/register')
-                .send(body)
-                .end((err, res) => {
-                    res.should.have.status(201);
-                    res.body.should.be.a('object');
-                    done();
-                });
-        });
+        //     chai.request(server)
+        //         .post('/register')
+        //         .send(body)
+        //         .end((err, res) => {
+        //             res.should.have.status(201);
+        //             res.body.should.be.a('object');
+        //             done();
+        //         });
+        // });
 
         it('Should get 200 - logging in', (done) => {
             let user = {
@@ -182,16 +203,16 @@ describe('Reports', () => {
         })
     });
 
-    after(() => {
-        return new Promise((resolve) => {
-            db.run("DELETE FROM users;", (err) => {
-                if (err) {
-                    console.error("Could not delete all from users.", err.message);
-                }
+    // after(() => {
+    //     return new Promise((resolve) => {
+    //         db.run("DELETE FROM users;", (err) => {
+    //             if (err) {
+    //                 console.error("Could not delete all from users.", err.message);
+    //             }
 
-                resolve();
-            });
-        });
-    });
+    //             resolve();
+    //         });
+    //     });
+    // });
 
 });
