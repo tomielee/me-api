@@ -202,20 +202,20 @@ describe('Reports', () => {
         )
     });
 
-    /*
-    * Test the /GET - fetch a report
-    */
-    describe('GET /week/:id', () => {
-        it('Should return 200', (done) => {
-            let id = 3;
+    // /*
+    // * Test the /GET - fetch a report
+    // */
+    // describe('GET /week/:id', () => {
+    //     it('Should return 200', (done) => {
+    //         let id = 3;
 
-            chai.request(server)
-                .get("/reports/week/" + id)
-                .end((err, res) => {
-                    if (err) { console.log(err)}
-                    res.should.have.status(200);
-                    done()
-                });
-        })
-    });
+    //         chai.request(server)
+    //             .get("/reports/week/" + id)
+    //             .end((err, res) => {
+    //                 if (err) { console.log(err)}
+    //                 res.should.have.status(200);
+    //                 done()
+    //             });
+    //     })
+    // });
 });
