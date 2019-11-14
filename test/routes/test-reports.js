@@ -11,114 +11,71 @@ const chaiHttp = require('chai-http');
 
 const server = require('../../app.js');
 const db = require("../../db/database.js");
+const auth = require("../../models/auth.js");
 
 
 // Handle hashing password
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
+let token;
 
 chai.should(); //use strict
 chai.use(chaiHttp);
-
-let token = "";
 
 describe('Reports', () => {
     /*
     * Create tables users and reports.
     */
-    before(() => {
+    before(async () => {
         let sql_create_users = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
         let sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (id, title, text);";
 
-        return new Promise((resolve) => {
-            db.run(sql_create_users, (err) => {
-                if (err) {
-                    console.error("Could not create table users.", err.message);
-                };
-                db.run(sql_create_reports, (err) => {
-                    if (err) {
-                        console.error("Could not create table reports", err.message);
-                    }
-                    resolve();
-                });
-            });
-        });
-
+        await db.run(sql_create_users);
+        await db.run(sql_create_reports);
     });
 
     /*
     * Insert test content in users.
     */
-    beforeEach(async function () {
-        try {
-            const hash = await bcrypt.hash("Passw0rd!", saltRounds);
-            const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
-            const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
+    beforeEach(async () => {
+        const hash = await bcrypt.hash("Passw0rd!", saltRounds);
+        const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
+        const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
 
-            await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
-            await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
+        await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
+        await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
 
-            let body = {
-                email: "donald.duck@reports.com",
-                password: "Passw0rd!"
-            };
-
-            chai.request(server)
-                .post("/login")
-                .send(body)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.an("object");
-                    res.body.data.should.have.property("token");
-
-                    token = res.body.data.token;
-
-                });
-        } catch (ex) {
-            console.error(ex);
-        }
-    
+        token = auth.signToken({
+            name: "Donald Duck",
+            email: "donald.duck@reports.com",
+        });
     });
 
     /*
     * Delete tables users and reports.
     */
-    afterEach((done) => {
+    afterEach(async () => {
         const sql_delete_users = "DELETE FROM users;";
-        db.run(sql_delete_users);
+        await db.run(sql_delete_users);
 
         const sql_delete_reports = "DELETE FROM reports;";
-        db.run(sql_delete_reports);
-        done();
+        await db.run(sql_delete_reports);
+
+        // Ensure token is renewed
+        token = null;
     });
     
     /*
     * Drop tables users and reports.
     */
-    after((done) => {
+    after(async () => {
         const sql_drop_users = "DROP TABLE IF EXISTS users;";
-        db.run(sql_drop_users);
+        await db.run(sql_drop_users);
 
         const sql_drop_reports = "DROP TABLE IF EXISTS reports;";
-        db.run(sql_drop_reports);
-        done();
+        await db.run(sql_drop_reports);
     });
 
-
-
-    /*
-    * Test the /GET route
-    */
-    describe('GET /reports', () => {
-        it('200 HAPPY PATH', (done) => {
-            chai.request(server)
-                .get("/reports")
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    done();
-                });
-        });
-    });
 
     /*
     * Test the /POST route - with error
@@ -170,9 +127,7 @@ describe('Reports', () => {
                     res.should.have.status(201);
                     done()
                 })
-        }
-            
-        )
+        })
     });
 
     // /*
