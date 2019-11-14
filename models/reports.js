@@ -103,7 +103,7 @@ const reports = {
         const sql = "SELECT * FROM reports WHERE id IS(?);";
         const id = params.id;
 
-        db.each(
+        db.get(
             sql,
             id,
             (err, result) => {
