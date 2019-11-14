@@ -50,29 +50,6 @@ describe('Reports', () => {
     * Insert test content in users.
     */
     beforeEach(async function () {
-        // return new Promise((resolve) => {
-        //     bcrypt.hash("Passw0rd!", saltRounds, (err, hash) => {
-        //         if (err) {
-        //             console.error("Could not create hash.");
-        //         }
-        //         const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
-                
-        //         db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user), (err) => {
-        //             if (err) {
-        //                 console.error("Could not insert content in users.");
-        //             }
-
-        //             const report = [3, "testtitel", "test text. ÅÄÖ shouldn't have an effect."];
-        //             db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report), (err) => {
-        //                 if (err) {
-        //                     console.error("Could not insert content in reports.");
-        //                 }
-        //                 resolve();
-        //             };
-        //         };
-
-        //     });
-        // })
         try {
             const hash = await bcrypt.hash("Passw0rd!", saltRounds);
             const user = ["Donald Duck", "donald.duck@reports.com", "9 June 1934", hash];
@@ -81,6 +58,22 @@ describe('Reports', () => {
             await db.run("INSERT INTO users (name, email, birthday, password) VALUES(?, ?, ?, ?);", user);
             await db.run("INSERT INTO reports (id, title, text) VALUES(?, ?, ?);", report);
 
+            let body = {
+                email: "donald.duck@reports.com",
+                password: "Passw0rd!"
+            };
+
+            chai.request(server)
+                .post("/login")
+                .send(body)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.an("object");
+                    res.body.data.should.have.property("token");
+
+                    token = res.body.data.token;
+
+                });
         } catch (ex) {
             console.error(ex);
         }
@@ -136,26 +129,6 @@ describe('Reports', () => {
                 .post("/reports")
                 .end((err, res) => {
                     res.should.have.status(401);
-                    done();
-                });
-        });
-
-        it('Should get 200 - logging in', (done) => {
-            let body = {
-                email: "donald.duck@reports.com",
-                password: "Passw0rd!"
-            };
-
-            chai.request(server)
-                .post("/login")
-                .send(body)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.an("object");
-                    res.body.data.should.have.property("token");
-
-                    token = res.body.data.token;
-
                     done();
                 });
         });
