@@ -141,14 +141,14 @@ describe('Reports', () => {
         });
 
         it('Should get 200 - logging in', (done) => {
-            let user = {
+            let body = {
                 email: "donald.duck@reports.com",
                 password: "Passw0rd!"
             };
 
             chai.request(server)
                 .post("/login")
-                .send(user)
+                .send(body)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.an("object");
