@@ -21,34 +21,24 @@ describe('Register', () => {
     /*
     * Create tables users.
     */
-    before(() => {
-        return new Promise((resolve) => {
-            let sql_create = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
-            db.run(sql_create, (err) => {
-                if (err) {
-                    console.log("Could not create table users.");
-                }
-                resolve();
-            });
-        });
+    before(async () => {
+        const sql_create = "CREATE TABLE IF NOT EXISTS users (name, email, birthday, password);";
+
+        await db.run(sql_create);
     });
 
     /*
     * Delete tables users.
     */
-    afterEach((done) => {
-        const sql_delete = "DELETE FROM users;";
-        db.run(sql_delete);
-        done();
+    afterEach(async () => {
+        await db.run("DELETE FROM users;");
     });
 
     /*
     * Drop tables users.
     */
-    after((done) => {
-        const sql_drop = "DROP TABLE IF EXISTS users;";
-        db.run(sql_drop);
-        done();
+    after(async () => {
+        await db.run("DROP TABLE IF EXISTS users;");
     });
 
 
