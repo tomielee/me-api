@@ -84,8 +84,8 @@ describe('Login', () => {
     describe('POST /login', () => {
         it('should get 401 - wrong password.', (done) => {
             const body = {
-                userEmail: "donald.duck@testlogin.com",
-                userPassword: "InvalidPassw0rd!"
+                email: "donald.duck@testlogin.com",
+                password: "InvalidPassw0rd!"
             }
 
             chai.request(server)
@@ -101,8 +101,8 @@ describe('Login', () => {
 
         it('should get 401 - user not found.', (done) => {
             const body = {
-                userEmail: "mickey.mouse@example.com",
-                userPassword: "Passw0rd!"
+                email: "mickey.mouse@example.com",
+                password: "Passw0rd!"
             }
 
             chai.request(server)
