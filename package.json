@@ -2,7 +2,7 @@
   "name": "me-api",
   "version": "1.0.2",
   "description": "express me-api for jsramverk",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "pretest": "bash db/reset_test_db.bash",
     "test": "nyc --reporter=html --reporter=text --reporter=clover mocha 'test/**/*.js' --timeout 10000",
@@ -12,22 +12,6 @@
     "clean": "rm -rf node_modules package-lock.json",
     "eslint": "eslint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jeneljenel/me-api.git"
-  },
-  "keywords": [
-    "me-api",
-    "jsramverk",
-    "api",
-    "express"
-  ],
-  "author": "jenel",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jeneljenel/me-api/issues"
-  },
-  "homepage": "https://github.com/jeneljenel/me-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
