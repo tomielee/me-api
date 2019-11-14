@@ -6,21 +6,18 @@ var router = express.Router();
 
 const auth = require('../models/auth.js');
 
+router.post("/", async (req, res, next) => {
+    const { email, password } = req.body;
 
-// middleware that is specific to this router
-// router.use(function (req, res, next) {
-//     console.log("router '/login' works");
-//     next();
-// });
+    try {
+        const { user, token } = await auth.login(email, password);
+        const message = "User logged in";
+        const data = { message, user, token };
 
-router.get("/", (req, res) => {
-    auth.getUsers(res, req.body)
-});
-
-//index of LOGIN
-router.post('/', 
-    (req, res) => {
-    auth.loginUser(res, req.body)
+        res.status(200).json({ data });
+    } catch (ex) {
+        next(err);
+    }
 });
 
 module.exports = router;
