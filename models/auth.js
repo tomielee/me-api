@@ -97,7 +97,7 @@ const auth = {
             });
         }
 
-        db.each(
+        db.get(
             sql,
             userEmail,
             (err, userfound) => {
