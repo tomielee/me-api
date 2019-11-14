@@ -1,11 +1,13 @@
 /*
 * LOGIN
 */
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-const auth = require('../models/auth.js');
+const auth = require("../models/auth");
 
+
+//index of LOGIN
 router.post("/", async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -15,7 +17,7 @@ router.post("/", async (req, res, next) => {
         const data = { message, user, token };
 
         res.status(200).json({ data });
-    } catch (ex) {
+    } catch(err) {
         next(err);
     }
 });
