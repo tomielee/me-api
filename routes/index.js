@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-// middleware that is specific to this router
-// router.use(function (req, res, next) {
-//     console.log("router '/index' works");
-//     next();
-// });
 
 router.get('/', function (req, res, next) {
     const data = {
