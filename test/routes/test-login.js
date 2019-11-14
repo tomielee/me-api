@@ -53,7 +53,6 @@ describe('Login', () => {
     afterEach(async function() {
         const sql_delete = "DELETE FROM users;";
         await db.run(sql_delete);
-
     });
 
     /*
@@ -62,20 +61,6 @@ describe('Login', () => {
     after(async function () {
         const sql_drop = "DROP TABLE IF EXISTS users;";
         await db.run(sql_drop);
-    });
-
-    /*
-    * Test the /GET route
-    */
-    describe('GET /login', () => {
-        it('200 HAPPY PATH', (done) => {
-            chai.request(server)
-                .get("/login")
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    done();
-                });
-        });
     });
 
     /*
@@ -116,7 +101,7 @@ describe('Login', () => {
                 });
         });
 
-        it('should get 200 - login success.', (done) => {         
+        it('should get 200 - login success.', (done) => {
             const body = {
                 email: "donald.duck@testlogin.com",
                 password: "Passw0rd!"
