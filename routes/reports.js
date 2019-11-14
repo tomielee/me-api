@@ -1,18 +1,14 @@
 /*
 * REPORTS
 */
-var express = require('express');
-var router = express.Router();
-
-
-//Database
-const sqlite3 = require('sqlite3').verbose();
+const express = require("express");
+const router = express.Router();
 
 //Models
-const reports = require('../models/reports.js');
+const reports = require("../models/reports");
 
 //Authenticate theck - check token
-const withAuth = require('../middleware.js');
+const withAuth = require("../middleware");
 
 
 // middleware that is specific to this router
@@ -23,26 +19,70 @@ const withAuth = require('../middleware.js');
 
 //Index of Reports
 // Get ALL
-router.get("/", (req, res) => {
-    reports.getAllReports(res)
+router.get("/", async (req, res, next) => {
+    try {
+        const all = await reports.all();
+
+        res.status(200).json({
+            data: {
+                message: "Reports successfully retreived",
+                reports: all,
+            },
+        });
+    } catch(ex) {
+        next(ex);
+    }
 });
 
 // Add report
-router.post("/",
-    withAuth,
-    (req, res) => reports.addReport(res, req.body)
-);
+router.post("/", withAuth, async (req, res, next) => {
+    const { title, text } = req.body;
+
+    try {
+        await reports.add({ title, text });
+
+        const message = "Report successfully added";
+
+        res.status(201).json({
+            data: { message },
+        });
+    } catch(ex) {
+        next(ex);
+    }
+});
 
 //Edit report
-router.put("/edit", 
-    withAuth,
-    (req, res) => reports.editReport(res, req.body)
-);
+router.put("/edit", withAuth, async (req, res, next) => {
+    const { id, title, text } = req.body;
+
+    try {
+        await reports.edit({ id, title, text });
+
+        const message = "Report successfully edited";
+
+        res.status(201).json({
+            data: { message },
+        });
+    } catch(ex) {
+        next(ex);
+    }
+});
 
 //Get A report
-router.get("/week/:id", (req, res) =>
-    reports.getReport(res, req.params)
-);
+router.get("/week/:id",async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+        const report = await reports.get(id);
+        const message = "Report successfully retreived";
+
+        res.status(200).json({
+            data: { message, report },
+        });
+    } catch(ex) {
+        next(ex);
+    }
+});
 
 
 
