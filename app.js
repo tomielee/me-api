@@ -13,12 +13,15 @@ const bodyParser = require("body-parser"); //Handle spaces and ÅÄÖ
 const cookieParser = require('cookie-parser'); //Protect routes
 
 const app = express();
-//const port = 1337; //use on local
-const port = 8333; //use on server
+const port = 1337; //use on local
+// const port = 8333; //use on server
 
 
 app.all('/', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://me-api.jeneljenel/*");
+    // res.header("Access-Control-Allow-Origin", "https://me-api.jeneljenel/*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:1337/*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000/*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:8000/*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
 });
